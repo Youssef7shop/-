@@ -3,8 +3,10 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Star } from 'lucide-react';
 import { menuData } from '../data/menuData';
+import { useTranslation } from 'react-i18next';
 
 export function Home() {
+  const { t } = useTranslation();
   const featuredMenu = menuData.filter(item => item.popular).slice(0, 3);
 
   return (
@@ -29,7 +31,7 @@ export function Home() {
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif font-bold text-white mb-6 arabic drop-shadow-2xl">
-              مطعم رضا الله <br/><span className="text-flame">نكهة الأصالة في كل لقمة</span>
+              {t('siteName')} <br/><span className="text-flame">{t('slogan')}</span>
             </h1>
           </motion.div>
           
@@ -39,7 +41,7 @@ export function Home() {
             transition={{ duration: 0.8, delay: 0.4 }}
           >
             <p className="text-xl md:text-2xl text-gray-200 mb-12 arabic font-light">
-              نكهات أصيلة، جودة استثنائية، وتجربة لا تُنسى.
+              {t('heroDesc')}
             </p>
           </motion.div>
 
@@ -50,13 +52,13 @@ export function Home() {
              className="flex flex-col sm:flex-row items-center justify-center gap-4 arabic font-medium"
           >
             <Link to="/menu" className="w-full sm:w-auto px-8 py-4 bg-flame hover:bg-orange-600 text-white font-medium tracking-wide rounded-sm transition-all flex items-center justify-center gap-2">
-              عرض القائمة
+              {t('viewMenu')}
             </Link>
             <Link to="/checkout" className="w-full sm:w-auto px-8 py-4 bg-transparent border border-gold text-gold hover:bg-gold hover:text-surface tracking-wide rounded-sm transition-all text-center">
-              اطلب الآن
+              {t('orderNow')}
             </Link>
             <a href="#contact" className="w-full sm:w-auto px-8 py-4 bg-surface-soft hover:bg-surface-lighter text-white tracking-wide rounded-sm transition-all text-center">
-              تواصل معنا
+              {t('contactUs')}
             </a>
           </motion.div>
         </div>
@@ -66,11 +68,11 @@ export function Home() {
       <section className="py-32 px-6 lg:px-12 max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-end mb-16">
           <div>
-            <h4 className="text-gold uppercase tracking-widest text-sm font-semibold mb-4">Highlights</h4>
-            <h2 className="text-4xl md:text-5xl font-serif">Signature Dishes</h2>
+            <h4 className="text-gold uppercase tracking-widest text-sm font-semibold mb-4">{t('highlights')}</h4>
+            <h2 className="text-4xl md:text-5xl font-serif">{t('signatureDishes')}</h2>
           </div>
           <Link to="/menu" className="group flex items-center gap-2 text-sm uppercase tracking-wider text-gray-400 hover:text-white mt-6 md:mt-0 transition-colors">
-            Full Menu <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            {t('fullMenu')} <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
 
@@ -94,8 +96,8 @@ export function Home() {
                   {item.price} MAD
                 </div>
               </div>
-              <h3 className="text-2xl font-serif mb-2 group-hover:text-gold transition-colors">{item.name}</h3>
-              <p className="text-gray-400 text-sm leading-relaxed line-clamp-2">{item.description}</p>
+              <h3 className="text-2xl font-serif mb-2 group-hover:text-gold transition-colors">{t(item.nameTranslationKey || item.id + 'Name', { defaultValue: item.name })}</h3>
+              <p className="text-gray-400 text-sm leading-relaxed line-clamp-2">{t(item.descTranslationKey || item.id + 'Desc', { defaultValue: item.description })}</p>
             </motion.div>
           ))}
         </div>
@@ -111,22 +113,22 @@ export function Home() {
             <div className="absolute -bottom-8 -right-8 w-64 h-64 border border-gold rounded-full flex items-center justify-center p-4 bg-surface hidden md:flex">
               <div className="text-center">
                 <span className="block text-4xl font-serif text-flame mb-2">10+</span>
-                <span className="text-xs uppercase tracking-widest text-gray-400">Years of<br/>Excellence</span>
+                <span className="text-xs uppercase tracking-widest text-gray-400">{t('yearsExcellence')}</span>
               </div>
             </div>
           </div>
           <div className="order-1 lg:order-2">
-            <h4 className="text-flame uppercase tracking-widest text-sm font-semibold mb-4">Our Story</h4>
-            <h2 className="text-4xl md:text-5xl font-serif mb-8 leading-tight">A Legacy of <br/><span className="text-gold">Authentic Heat.</span></h2>
+            <h4 className="text-flame uppercase tracking-widest text-sm font-semibold mb-4">{t('ourStory')}</h4>
+            <h2 className="text-4xl md:text-5xl font-serif mb-8 leading-tight">{t('legacyOf')} <br/><span className="text-gold">{t('authenticHeat')}.</span></h2>
             <p className="text-gray-400 leading-relaxed mb-6">
-              Founded in the heart of Kénitra, مطعم رضا الله began with a simple philosophy: respect the meat, master the fire, and treat every guest like family. 
+              {t('storyP1')}
             </p>
             <p className="text-gray-400 leading-relaxed mb-10">
-              For over a decade, we have perfected the art of Moroccan barbecue. We source only the finest local cuts, hand-marinated in traditional spices passed down through generations.
+              {t('storyP2')}
             </p>
             <div className="flex items-center gap-4">
                <div className="w-12 h-px bg-gold"></div>
-               <span className="uppercase tracking-widest text-sm">Discover More</span>
+               <span className="uppercase tracking-widest text-sm">{t('discoverMore')}</span>
             </div>
           </div>
         </div>
@@ -134,7 +136,7 @@ export function Home() {
 
       {/* Reviews Summary */}
       <section className="py-32 px-6 lg:px-12 max-w-7xl mx-auto text-center">
-        <h2 className="text-3xl font-serif mb-16">Customer Reviews</h2>
+        <h2 className="text-3xl font-serif mb-16">{t('customerReviews')}</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {/* Review 1 */}
           <div className="bg-surface-soft p-8 rounded-sm border border-surface-lighter">
@@ -143,11 +145,11 @@ export function Home() {
                 <Star key={star} className="w-5 h-5 text-gold fill-gold mx-0.5" />
               ))}
             </div>
-            <p className="text-xl font-serif mb-6 arabic">"مرحبا بي الجميع"</p>
+            <p className="text-xl font-serif mb-6 arabic">{t('review1Text')}</p>
             <div className="flex justify-center gap-4 text-sm text-gray-400">
-              <span>Food: 5/5</span>
+              <span>{t('food')}: 5/5</span>
               <span>•</span>
-              <span>Service: 5/5</span>
+              <span>{t('service')}: 5/5</span>
             </div>
           </div>
           {/* Review 2 */}
@@ -157,15 +159,15 @@ export function Home() {
                 <Star key={star} className="w-5 h-5 text-gold fill-gold mx-0.5" />
               ))}
             </div>
-            <p className="text-xl font-serif mb-6 arabic">"محل راقي وكذالك ناس المحل"</p>
+            <p className="text-xl font-serif mb-6 arabic">{t('review2Text')}</p>
              <div className="flex justify-center gap-4 text-sm text-gray-400">
-              <span>Food: 5/5</span>
+              <span>{t('food')}: 5/5</span>
               <span>•</span>
-              <span>Service: 5/5</span>
+              <span>{t('service')}: 5/5</span>
             </div>
           </div>
         </div>
-        <p className="text-gray-400 uppercase tracking-widest text-sm font-medium mt-16">— Average Rating 4.0/5</p>
+        <p className="text-gray-400 uppercase tracking-widest text-sm font-medium mt-16">— {t('averageRating')} 4.0/5</p>
       </section>
     </div>
   );

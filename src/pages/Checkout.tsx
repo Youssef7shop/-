@@ -3,15 +3,17 @@ import { motion } from 'framer-motion';
 import { useCart } from '../context/CartContext';
 import { Trash2, Plus, Minus, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 export function Checkout() {
   const { cart, updateQuantity, removeFromCart, totalPrice } = useCart();
   const [notes, setNotes] = useState("");
+  const { t } = useTranslation();
 
   const handleWhatsAppOrder = () => {
     let message = "السلام عليكم، أريد طلب:\n\n";
     cart.forEach(item => {
-      message += `- ${item.name} (${item.quantity}x)\n`;
+      message += `- ${t(item.id + 'Name', { defaultValue: item.name })} (${item.quantity}x)\n`;
     });
     if (notes) {
       message += `\nملاحظات: ${notes}\n`;
@@ -25,10 +27,10 @@ export function Checkout() {
   if (cart.length === 0) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center text-center px-6">
-        <h2 className="text-3xl font-serif mb-6">Your Cart is Empty</h2>
+        <h2 className="text-3xl font-serif mb-6">{t('emptyCart')}</h2>
         <p className="text-gray-400 mb-8 max-w-md">Discover our premium selection and find something you love.</p>
         <Link to="/menu" className="px-8 py-4 bg-white text-surface hover:bg-gold font-medium uppercase tracking-wide rounded-sm transition-all">
-          Explore Menu
+          {t('menu')}
         </Link>
       </div>
     );
@@ -36,7 +38,7 @@ export function Checkout() {
 
   return (
     <div className="min-h-screen pt-32 pb-24 px-6 lg:px-12 max-w-7xl mx-auto">
-      <h1 className="text-4xl md:text-5xl font-serif font-bold mb-12">Checkout</h1>
+      <h1 className="text-4xl md:text-5xl font-serif font-bold mb-12">{t('checkout')}</h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
         <div className="lg:col-span-2">
@@ -54,7 +56,7 @@ export function Checkout() {
                 </div>
                 
                 <div className="flex-1">
-                  <h3 className="font-serif text-lg mb-1">{item.name}</h3>
+                  <h3 className="font-serif text-lg mb-1">{t(item.id + 'Name', { defaultValue: item.name })}</h3>
                   <p className="text-gold font-medium">{item.price} MAD</p>
                 </div>
 
@@ -111,7 +113,7 @@ export function Checkout() {
             </div>
             
             <div className="flex justify-between mt-6 pt-6 border-t border-surface-lighter text-xl font-serif">
-              <span>Total</span>
+              <span>{t('total')}</span>
               <span className="text-gold">{totalPrice} MAD</span>
             </div>
 

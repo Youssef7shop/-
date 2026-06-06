@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ShoppingBag, Menu, X, User, Globe, ChevronDown } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
 import { Link, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const LANGUAGES = [
   { code: 'ar', name: 'العربية' },
@@ -15,11 +16,13 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [langMenuOpen, setLangMenuOpen] = useState(false);
-  const [currentLang, setCurrentLang] = useState(LANGUAGES[0]);
-  const langMenuRef = useRef<HTMLDivElement>(null);
   
   const { cart } = useCart();
   const location = useLocation();
+  const { t, i18n } = useTranslation();
+
+  const currentLangCode = i18n.language;
+  const currentLang = LANGUAGES.find(l => l.code === currentLangCode) || LANGUAGES[0];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,13 +42,21 @@ export function Navbar() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  const langMenuRef = useRef<HTMLDivElement>(null);
+
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   const links = [
-    { name: 'Home', path: '/' },
-    { name: 'Our Menu', path: '/menu' },
-    { name: 'Checkout', path: '/checkout' }
+    { name: t('home'), path: '/' },
+    { name: t('menu'), path: '/menu' },
+    { name: t('checkout'), path: '/checkout' }
   ];
+
+  const handleLanguageChange = (code: string) => {
+    i18n.changeLanguage(code);
+    setLangMenuOpen(false);
+    setMobileMenuOpen(false);
+  };
 
   return (
     <>
@@ -59,7 +70,7 @@ export function Navbar() {
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           
           <Link to="/" className="flex flex-col items-center group">
-            <span className="text-2xl font-serif font-bold tracking-widest text-white group-hover:text-gold transition-colors arabic">مطعم رضا الله</span>
+            <span className="text-2xl font-serif font-bold tracking-widest text-white group-hover:text-gold transition-colors arabic">{t('siteName')}</span>
             <span className="text-[10px] tracking-[0.3em] uppercase text-gray-400">Premium BBQ</span>
           </Link>
 
@@ -101,10 +112,7 @@ export function Navbar() {
                     {LANGUAGES.map((lang) => (
                       <button
                         key={lang.code}
-                        onClick={() => {
-                          setCurrentLang(lang);
-                          setLangMenuOpen(false);
-                        }}
+                        onClick={() => handleLanguageChange(lang.code)}
                         className={`w-full text-left px-4 py-2 text-sm transition-colors hover:bg-surface-soft ${
                           currentLang.code === lang.code ? 'text-gold bg-surface-soft' : 'text-gray-300 hover:text-white'
                         }`}
@@ -149,7 +157,7 @@ export function Navbar() {
             className="fixed inset-0 z-[60] bg-surface h-screen w-full p-6 flex flex-col overflow-y-auto"
           >
             <div className="flex justify-between items-center mb-12">
-              <span className="text-2xl font-serif font-bold text-white arabic">مطعم رضا الله</span>
+              <span className="text-2xl font-serif font-bold text-white arabic">{t('siteName')}</span>
               <button onClick={() => setMobileMenuOpen(false)}>
                 <X className="w-8 h-8 text-white" />
               </button>
@@ -168,15 +176,12 @@ export function Navbar() {
             </div>
 
             <div className="flex flex-col gap-4 mb-8">
-              <h3 className="text-sm font-bold text-gray-400 uppercase tracking-widest border-b border-surface-lighter pb-2">Language</h3>
+              <h3 className="text-sm font-bold text-gray-400 uppercase tracking-widest border-b border-surface-lighter pb-2">{t('language')}</h3>
               <div className="grid grid-cols-2 gap-2">
                 {LANGUAGES.map((lang) => (
                   <button
                     key={lang.code}
-                    onClick={() => {
-                      setCurrentLang(lang);
-                      setMobileMenuOpen(false);
-                    }}
+                    onClick={() => handleLanguageChange(lang.code)}
                     className={`text-left px-4 py-3 rounded-sm text-sm border transition-colors ${
                       currentLang.code === lang.code 
                         ? 'border-gold text-gold bg-surface-soft' 
