@@ -9,6 +9,8 @@ export interface MenuItem {
   calories: number;
   available: boolean;
   popular?: boolean;
+  nameTranslationKey?: string;
+  descTranslationKey?: string;
 }
 
 export const menuCategories = [
@@ -33,7 +35,9 @@ export const menuData: MenuItem[] = [
     images: ["https://images.unsplash.com/photo-1544025162-811114215b3a?auto=format&fit=crop&w=800&q=80"],
     calories: 1200,
     available: true,
-    popular: true
+    popular: true,
+    nameTranslationKey: "menuItem1Name",
+    descTranslationKey: "menuItem1Desc"
   },
   {
     id: "chicken-1",
@@ -45,7 +49,9 @@ export const menuData: MenuItem[] = [
     images: ["https://images.unsplash.com/photo-1598514982205-f36b96d1e8d4?auto=format&fit=crop&w=800&q=80"],
     calories: 850,
     available: true,
-    popular: true
+    popular: true,
+    nameTranslationKey: "menuItem2Name",
+    descTranslationKey: "menuItem2Desc"
   },
   {
     id: "kefta-1",
@@ -56,7 +62,9 @@ export const menuData: MenuItem[] = [
     category: "الكفتة",
     images: ["https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=800&q=80"],
     calories: 600,
-    available: true
+    available: true,
+    nameTranslationKey: "menuItem3Name",
+    descTranslationKey: "menuItem3Desc"
   },
   {
     id: "sandwich-1",
@@ -68,7 +76,9 @@ export const menuData: MenuItem[] = [
     images: ["https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80"],
     calories: 750,
     available: true,
-    popular: true
+    popular: true,
+    nameTranslationKey: "menuItem4Name",
+    descTranslationKey: "menuItem4Desc"
   },
   {
     id: "family-1",
@@ -79,7 +89,9 @@ export const menuData: MenuItem[] = [
     category: "الوجبات العائلية",
     images: ["https://images.unsplash.com/photo-1544025162-811114215b3a?auto=format&fit=crop&w=800&q=80"],
     calories: 3500,
-    available: true
+    available: true,
+    nameTranslationKey: "menuItem5Name",
+    descTranslationKey: "menuItem5Desc"
   },
   {
     id: "dessert-1",
@@ -90,6 +102,8 @@ export const menuData: MenuItem[] = [
     category: "الحلويات",
     images: ["https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=800&q=80"],
     calories: 400,
-    available: true
+    available: true,
+    nameTranslationKey: "menuItem6Name",
+    descTranslationKey: "menuItem6Desc"
   }
 ];

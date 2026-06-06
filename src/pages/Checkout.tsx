@@ -13,7 +13,7 @@ export function Checkout() {
   const handleWhatsAppOrder = () => {
     let message = "السلام عليكم، أريد طلب:\n\n";
     cart.forEach(item => {
-      message += `- ${t(item.id + 'Name', { defaultValue: item.name })} (${item.quantity}x)\n`;
+      message += `- ${t(item.nameTranslationKey || item.id + 'Name', { defaultValue: item.name })} (${item.quantity}x)\n`;
     });
     if (notes) {
       message += `\nملاحظات: ${notes}\n`;
@@ -56,7 +56,7 @@ export function Checkout() {
                 </div>
                 
                 <div className="flex-1">
-                  <h3 className="font-serif text-lg mb-1">{t(item.id + 'Name', { defaultValue: item.name })}</h3>
+                  <h3 className="font-serif text-lg mb-1">{t(item.nameTranslationKey || item.id + 'Name', { defaultValue: item.name })}</h3>
                   <p className="text-gold font-medium">{item.price} MAD</p>
                 </div>
 
@@ -89,11 +89,11 @@ export function Checkout() {
           </div>
 
           <div className="mt-8">
-            <label className="block text-sm font-medium uppercase tracking-wider text-gray-400 mb-3">Order Notes</label>
+            <label className="block text-sm font-medium uppercase tracking-wider text-gray-400 mb-3">{t('orderNotes')}</label>
             <textarea 
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              placeholder="Any special requests or delivery instructions?"
+              placeholder={t('orderNotesPlaceholder')}
               className="w-full h-32 bg-surface-soft border border-surface-lighter rounded-sm p-4 focus:outline-none focus:border-gold transition-colors resize-none"
             ></textarea>
           </div>
@@ -101,15 +101,15 @@ export function Checkout() {
 
         <div>
           <div className="bg-surface-soft p-8 rounded-sm sticky top-32 border border-surface-lighter">
-            <h3 className="text-xl font-serif mb-6 border-b border-surface-lighter pb-4">Order Summary</h3>
+            <h3 className="text-xl font-serif mb-6 border-b border-surface-lighter pb-4">{t('orderSummary')}</h3>
             
             <div className="flex justify-between mb-4 text-gray-400">
-              <span>Subtotal</span>
+              <span>{t('subtotal')}</span>
               <span>{totalPrice} MAD</span>
             </div>
             <div className="flex justify-between mb-4 text-gray-400">
-              <span>Delivery Fee</span>
-              <span>Calculated on WhatsApp</span>
+              <span>{t('deliveryFee')}</span>
+              <span>{t('calculatedOnWhatsApp')}</span>
             </div>
             
             <div className="flex justify-between mt-6 pt-6 border-t border-surface-lighter text-xl font-serif">
@@ -121,11 +121,11 @@ export function Checkout() {
               onClick={handleWhatsAppOrder}
               className="w-full py-4 mt-8 bg-[#25D366] hover:bg-[#20bd5a] text-white font-medium uppercase tracking-wide rounded-sm transition-all flex items-center justify-center gap-3 shadow-lg shadow-[#25D366]/20"
             >
-              Order via WhatsApp <ArrowRight className="w-5 h-5" />
+              {t('orderViaWhatsApp')} <ArrowRight className="w-5 h-5" />
             </button>
 
             <p className="text-xs text-center text-gray-500 mt-4 leading-relaxed">
-              By placing your order, you will be redirected to WhatsApp to finalize delivery details with our staff.
+              {t('whatsappRedirectNotice')}
             </p>
           </div>
         </div>

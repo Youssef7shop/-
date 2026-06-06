@@ -13,8 +13,8 @@ export function Menu() {
 
   const filteredMenu = menuData.filter(item => {
     const matchesCategory = activeCategory === "All" || item.category === activeCategory;
-    const translatedName = t(item.id + 'Name', { defaultValue: item.name }).toLowerCase();
-    const translatedDesc = t(item.id + 'Desc', { defaultValue: item.description }).toLowerCase();
+    const translatedName = t(item.nameTranslationKey || item.id + 'Name', { defaultValue: item.name }).toLowerCase();
+    const translatedDesc = t(item.descTranslationKey || item.id + 'Desc', { defaultValue: item.description }).toLowerCase();
     const searchLower = searchQuery.toLowerCase();
     const matchesSearch = translatedName.includes(searchLower) || translatedDesc.includes(searchLower);
     return matchesCategory && matchesSearch;
@@ -99,9 +99,9 @@ export function Menu() {
             
             <div className="flex-1 flex flex-col">
               <div className="flex justify-between items-start mb-2">
-                <h3 className="text-xl font-serif">{t(item.id + 'Name', { defaultValue: item.name })}</h3>
+                <h3 className="text-xl font-serif">{t(item.nameTranslationKey || item.id + 'Name', { defaultValue: item.name })}</h3>
               </div>
-              <p className="text-gray-400 text-sm leading-relaxed mb-4 flex-1">{t(item.id + 'Desc', { defaultValue: item.description })}</p>
+              <p className="text-gray-400 text-sm leading-relaxed mb-4 flex-1">{t(item.descTranslationKey || item.id + 'Desc', { defaultValue: item.description })}</p>
               
               <div className="flex items-center justify-between border-t border-surface-lighter pt-4 mt-auto">
                 <div className="text-xs text-gray-500 uppercase tracking-wider">
