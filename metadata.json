@@ -1,0 +1,6 @@
+{
+  "name": "مطعم رضا الله - Reda Allah Restaurant",
+  "description": "Premium Moroccan barbecue restaurant website and management system for مطعم رضا الله.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
