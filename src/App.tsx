@@ -4,7 +4,7 @@
  */
 
 import React, { useEffect } from 'react';
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation, Outlet } from 'react-router-dom';
 import { CartProvider } from './context/CartContext';
 import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
@@ -23,12 +23,12 @@ function ScrollToTop() {
   return null;
 }
 
-function CustomerLayout({ children }: { children: React.ReactNode }) {
+function CustomerLayout() {
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
       <main className="flex-grow tracking-wide">
-        {children}
+        <Outlet />
       </main>
       <Footer />
       <ChatWidget />
@@ -42,15 +42,11 @@ export default function App() {
       <BrowserRouter>
         <ScrollToTop />
         <Routes>
-          <Route path="/*" element={
-            <CustomerLayout>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/menu" element={<Menu />} />
-                <Route path="/checkout" element={<Checkout />} />
-              </Routes>
-            </CustomerLayout>
-          } />
+          <Route element={<CustomerLayout />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/menu" element={<Menu />} />
+            <Route path="/checkout" element={<Checkout />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </CartProvider>
